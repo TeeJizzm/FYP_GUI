@@ -3,15 +3,15 @@
 /** V3.1
  ** Update 29/01/21
   * Added value Slider
-  * Added set white
-  * Function layed out
+  * Added set white button
+  * Functional layout
   */
 
 /** V3.0
  ** Update 27/01/21
   * Modified colour changes
   * Added buttons
-  * Added functions
+  * Added function placeholder
   */
 
 /** V2.0
@@ -227,7 +227,7 @@ ApplicationWindow {
             target: btnOff
             onClicked: {
                 console.log("Off/Black")
-
+                btnPressed(0)
             }
         } // End connection
     } // End btnOff
@@ -252,7 +252,7 @@ ApplicationWindow {
             target: btnSet
             onClicked: {
                 console.log("Colour")
-
+                btnPressed(2)
             }
         } // end connection
     } // btnSet
@@ -273,7 +273,7 @@ ApplicationWindow {
             target: btnWhite
             onClicked: {
                 console.log("White")
-
+                btnPressed(1)
             }
         }
         anchors.horizontalCenter: parent.horizontalCenter
