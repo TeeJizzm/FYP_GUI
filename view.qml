@@ -145,9 +145,7 @@ ApplicationWindow {
 
 
         } // End handle
-
-
-    }
+    } // End slider
 
     Slider {
         id: brightness
@@ -156,26 +154,29 @@ ApplicationWindow {
         background: Rectangle {
             x: brightness.leftPadding
             y: brightness.topPadding + brightness.availableHeight / 2 - height / 2
+            anchors.centerIn: parent
             width: brightness.availableWidth
             height: implicitHeight
+            implicitWidth: 240
+            implicitHeight: 90
             radius: 20
             border.color: "#333333"
             border.width: 1
-            gradient: Gradient {
-                GradientStop {
+
+
+            gradient: Gradient { // Generate gradient over slider
+                GradientStop { // Black
                     position: 0
                     color: Qt.hsva(1, 0, position)
                 }
 
-                GradientStop {
+                GradientStop { // White
                     position: 1
                     color: Qt.hsva(1, 0, position)
                 }
                 orientation: Gradient.Horizontal
             }
-            implicitWidth: 240
-            anchors.centerIn: parent
-            implicitHeight: 90
+
         }
         anchors.verticalCenterOffset: -110
         handle: Rectangle {
@@ -214,7 +215,7 @@ ApplicationWindow {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenterOffset: 120
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: 160
+        anchors.verticalCenterOffset: 165
         font.pointSize: 11
         font.family: "Tahoma"
 
@@ -242,7 +243,7 @@ ApplicationWindow {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenterOffset: -120
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: 160
+        anchors.verticalCenterOffset: 165
         font.pointSize: 11
         checkable: false
         font.family: "Tahoma"
@@ -266,7 +267,7 @@ ApplicationWindow {
         text: qsTr("Set White")
         anchors.verticalCenter: parent.verticalCenter
         font.pointSize: 11
-        anchors.verticalCenterOffset: 160
+        anchors.verticalCenterOffset: 165
         font.family: "Tahoma"
         anchors.horizontalCenterOffset: 0
         Connections {
