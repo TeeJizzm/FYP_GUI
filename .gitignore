@@ -139,6 +139,7 @@ cython_debug/
 
 # pyQt files
 *.pyproject.user
+*.qmlc
 setup.py
 requirements.txt
 

@@ -1,5 +1,13 @@
 /*** Rainbow Slider UI - Colour choosing  **/
 
+/** V4.0
+ ** Update 16/02/21
+  * Working on Pi
+  * Changed version numbers for compatibility
+  * Gradient changes for before QML 2.5
+  * Reintroduced QtGraphicalEffects
+  */
+
 /** V3.1
  ** Update 29/01/21
   * Added value Slider
@@ -37,11 +45,11 @@
   * Minimum dependancy
   */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.5
+import QtQuick 2.11
+import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 //unnecessary import
-//import QtGraphicalEffects 1.12
 //import QtQuick.Controls.Styles 1.4
 
 
@@ -87,10 +95,12 @@ ApplicationWindow {
             border.color: "#333333" // Border colour
 
 
-            gradient: Gradient {    // Display HSV rainbow for selection
-                orientation: Gradient.Horizontal // Gradient orientation
+            LinearGradient: Gradient {    // Display HSV rainbow for selection
+                // orientation: Gradient.Horizontal // Gradient orientation
                 // 6 points on hue circle
-                GradientStop {  // Red
+                start: Qt.point(this.x,0)
+		end: Qt.point(this.y,0)
+		GradientStop {  // Red
                     position: 0.000
                     color: Qt.hsva(position, 1, 1)
                 }
@@ -174,7 +184,7 @@ ApplicationWindow {
                     position: 1
                     color: Qt.hsva(1, 0, position)
                 }
-                orientation: Gradient.Horizontal
+                //orientation: Gradient.Horizontal
             }
 
         }
