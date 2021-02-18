@@ -4,8 +4,8 @@
  ** Update 16/02/21
   * Working on Pi
   * Changed version numbers for compatibility
-  * Gradient changes for before QML 2.5
-  * Reintroduced QtGraphicalEffects
+  * Gradient functionality required rotating shapes
+  * Rotating shapes means changing widths and heights
   */
 
 /** V3.1
@@ -87,49 +87,46 @@ ApplicationWindow {
             y: colour.topPadding + colour.availableHeight / 2 - height / 2 // Positioning within confines of slider object
             implicitWidth: 240
             implicitHeight: 90
-            width: colour.availableWidth // Consistent size for design
-            height: implicitHeight
+            height: colour.availableWidth // Consistent size for design
+            width: implicitHeight
 
             radius: 20 // Rounded edge
+	    rotation: -90 // Vertical gradient
             border.width: 1 // Border size
             border.color: "#333333" // Border colour
 
-
-            LinearGradient: Gradient {    // Display HSV rainbow for selection
-                // orientation: Gradient.Horizontal // Gradient orientation
-                // 6 points on hue circle
-                start: Qt.point(this.x,0)
-		end: Qt.point(this.y,0)
+            gradient: Gradient {    // Display HSV rainbow for selection
+            	// orientation: Gradient.Horizontal // Gradient orientation
+            	// 6 points on hue circle
 		GradientStop {  // Red
-                    position: 0.000
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop { // Yellow
-                    position: 0.167
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop {  // Green
-                    position: 0.333
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop { // Light blue
-                    position: 0.500
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop { // Dark blue
-                    position: 0.667
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop { // Magenta
-                    position: 0.833
-                    color: Qt.hsva(position, 1, 1)
-                }
-                GradientStop { // Red
-                    position: 1.000
-                    color: Qt.hsva(position, 1, 1)
-                } // End gradient points
-            } // End gradient
-
+       	            position: 0.000
+	            color: Qt.hsva(0.000, 1, 1)
+	        }
+	        GradientStop { // Yellow
+	            position: 0.167
+	            color: Qt.hsva(0.167, 1, 1)
+	        }
+	        GradientStop {  // Green
+	            position: 0.333
+	            color: Qt.hsva(0.333, 1, 1)
+	        }
+	        GradientStop { // Light blue
+	            position: 0.500
+	            color: Qt.hsva(0.500, 1, 1)
+	        }
+	        GradientStop { // Dark blue
+		    position: 0.667
+	            color: Qt.hsva(0.667, 1, 1)
+	        }
+	        GradientStop { // Magenta
+	            position: 0.833
+	            color: Qt.hsva(0.833, 1, 1)
+	        }
+	        GradientStop { // Red
+	            position: 1.000
+	            color: Qt.hsva(1.000, 1, 1)
+	        }
+	    } // End Gradient
         } // End background
 
         handle: Rectangle // Floating handle designed as a colour dropper
@@ -137,7 +134,7 @@ ApplicationWindow {
             id: recPalette
             width: 40
             height: 40
-            x: width/2 + colour.value * (colour.background.width - width) // Fit the colour dropper to the selection bar
+            x: width/2 + colour.value * (colour.background.height - width) // Fit the colour dropper to the selection bar
             y: -this.height /2 // Have the dropper appear above the selection bar
             implicitWidth: 30 // Size of dropper
             implicitHeight: 50 // Size of dropper
@@ -165,11 +162,12 @@ ApplicationWindow {
             x: brightness.leftPadding
             y: brightness.topPadding + brightness.availableHeight / 2 - height / 2
             anchors.centerIn: parent
-            width: brightness.availableWidth
-            height: implicitHeight
+            height: brightness.availableWidth
+            width: implicitHeight
             implicitWidth: 240
             implicitHeight: 90
             radius: 20
+	    rotation: -90
             border.color: "#333333"
             border.width: 1
 
@@ -177,12 +175,12 @@ ApplicationWindow {
             gradient: Gradient { // Generate gradient over slider
                 GradientStop { // Black
                     position: 0
-                    color: Qt.hsva(1, 0, position)
+                    color: Qt.hsva(1, 0, 0)
                 }
 
                 GradientStop { // White
                     position: 1
-                    color: Qt.hsva(1, 0, position)
+                    color: Qt.hsva(1, 0, 1)
                 }
                 //orientation: Gradient.Horizontal
             }
@@ -191,7 +189,7 @@ ApplicationWindow {
         anchors.verticalCenterOffset: -110
         handle: Rectangle {
             id: recPalette1
-            x: width/2 + brightness.value * (brightness.background.width - width)
+            x: width/2 + brightness.value * (brightness.background.height - width)
             y: -this.height /2
             width: 40
             height: 40
