@@ -10,7 +10,8 @@
 /** V0.4
  ** Update 16/02/21
   * Working on Pi
-  * Changed version numbers for compatibility
+  * Changed Qt versions for compatibility
+  * Backwards compatibility changes
   * Gradient functionality required rotating shapes
   * Rotating shapes means changing widths and heights
   */
@@ -75,9 +76,8 @@ Page {
     function btnPressed(id) {
         // Take id as what Button is pressed
         // Button corresponds to the colour and state
-
-        console.log(id)
-
+        b.output(id)
+        //console.log(id)
     }
 
     Slider {
@@ -244,7 +244,7 @@ Page {
 
         Connections {
             target: btnOff
-            onClicked: {
+            function onClicked() {
                 //console.log("Off/Black")
                 btnPressed(0)
             }
@@ -266,10 +266,9 @@ Page {
         checkable: false
         font.family: "Tahoma"
 
-
         Connections {
             target: btnSet
-            onClicked: {
+            function onClicked() {
                 //console.log("Colour")
                 btnPressed(2)
             }
@@ -288,9 +287,10 @@ Page {
         anchors.verticalCenterOffset: 165
         font.family: "Tahoma"
         anchors.horizontalCenterOffset: 0
+
         Connections {
             target: btnWhite
-            onClicked: {
+            function onClicked() {
                 //console.log("White")
                 btnPressed(1)
             }
