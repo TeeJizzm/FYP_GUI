@@ -5,10 +5,7 @@
   * Renamed file
   * Created view pages with navigation
   * QML can now call Python functions
-<<<<<<< HEAD
   * Testing sending values
-=======
->>>>>>> e180071a7402deb296a5433f8335e0a3096cf735
   */
 
 /** V0.4
