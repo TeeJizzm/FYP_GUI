@@ -4,7 +4,7 @@
  ** Update 21/02/21
   * Renamed file
   * Created view pages with navigation
-  *
+  * QML can now call Python functions
   */
 
 /** V0.4
@@ -72,14 +72,6 @@ Page {
     }
     title: qsTr("Colour Selector")
 
-
-    function btnPressed(id) {
-        // Take id as what Button is pressed
-        // Button corresponds to the colour and state
-        b.output(id)
-        //console.log(id)
-    }
-
     Slider {
         id: colour
         anchors.centerIn: parent // Positioning
@@ -107,35 +99,35 @@ Page {
             gradient: Gradient {    // Display HSV rainbow for selection
             	// orientation: Gradient.Horizontal // Gradient orientation
             	// 6 points on hue circle
-		GradientStop {  // Red
+                GradientStop {  // Red
        	            position: 0.000
-	            color: Qt.hsva(0.000, 1, 1)
-	        }
-	        GradientStop { // Yellow
-	            position: 0.167
-	            color: Qt.hsva(0.167, 1, 1)
-	        }
-	        GradientStop {  // Green
-	            position: 0.333
-	            color: Qt.hsva(0.333, 1, 1)
-	        }
-	        GradientStop { // Light blue
-	            position: 0.500
-	            color: Qt.hsva(0.500, 1, 1)
-	        }
-	        GradientStop { // Dark blue
-		    position: 0.667
-	            color: Qt.hsva(0.667, 1, 1)
-	        }
-	        GradientStop { // Magenta
-	            position: 0.833
-	            color: Qt.hsva(0.833, 1, 1)
-	        }
-	        GradientStop { // Red
-	            position: 1.000
-	            color: Qt.hsva(1.000, 1, 1)
-	        }
-	    } // End Gradient
+                    color: Qt.hsva(0.000, 1, 1)
+                }
+                GradientStop { // Yellow
+                    position: 0.167
+                    color: Qt.hsva(0.167, 1, 1)
+                }
+                GradientStop {  // Green
+                    position: 0.333
+                    color: Qt.hsva(0.333, 1, 1)
+                }
+                GradientStop { // Light blue
+                    position: 0.500
+                    color: Qt.hsva(0.500, 1, 1)
+                }
+                GradientStop { // Dark blue
+                    position: 0.667
+                    color: Qt.hsva(0.667, 1, 1)
+                }
+                GradientStop { // Magenta
+                    position: 0.833
+                    color: Qt.hsva(0.833, 1, 1)
+                }
+                GradientStop { // Red
+                    position: 1.000
+                    color: Qt.hsva(1.000, 1, 1)
+                }
+            } // End Gradient
         } // End background
 
         handle: Rectangle // Floating handle designed as a colour dropper
@@ -161,6 +153,11 @@ Page {
 
 
         } // End handle
+
+
+
+
+
     } // End slider
 
     Slider {
@@ -246,7 +243,7 @@ Page {
             target: btnOff
             function onClicked() {
                 //console.log("Off/Black")
-                btnPressed(0)
+                b.output(0)
             }
         } // End connection
     } // End btnOff
@@ -270,7 +267,7 @@ Page {
             target: btnSet
             function onClicked() {
                 //console.log("Colour")
-                btnPressed(2)
+                b.output(2)
             }
         } // end connection
     } // btnSet
@@ -292,7 +289,7 @@ Page {
             target: btnWhite
             function onClicked() {
                 //console.log("White")
-                btnPressed(1)
+                b.output(1)
             }
         }
         anchors.horizontalCenter: parent.horizontalCenter
