@@ -13,11 +13,6 @@ if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
 
-
-
-
-
-
     engine.load(os.path.abspath("view.qml"))
 
     if not engine.rootObjects():

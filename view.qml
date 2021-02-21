@@ -1,292 +1,66 @@
-/*** Rainbow Slider UI - Colour choosing  **/
-
-/** V4.0
- ** Update 16/02/21
-  * Working on Pi
-  * Changed version numbers for compatibility
-  * Gradient functionality required rotating shapes
-  * Rotating shapes means changing widths and heights
-  */
-
-/** V3.1
- ** Update 29/01/21
-  * Added value Slider
-  * Added set white button
-  * Functional layout
-  */
-
-/** V3.0
- ** Update 27/01/21
-  * Modified colour changes
-  * Added buttons
-  * Added function placeholder
-  */
-
-/** V2.0
- ** Update 02/12/20
-  * Recreated in PyQt
-  * Corrected errors in runtime
-  */
-
-/** V1.1
- ** Update 03/11/20
-  * Dropper now only appears for selection
-  * Slider shows full spectrum
-  * Dropper lines up with bar
-  * Removed unnecessary imports
-  * Documentation of functions and objects
-  */
+/*** UI View Container  **/
 
 /** V1.0
- ** Creation 01/11/20
-  * Rainbow selection
-  * Slider with colour update
-  * Make generic and repeatable
-  * Minimum dependancy
+ ** Creation 21/02/21
+  * Setup up view with internal pages
+  * Navigation bar between pages
+  * Initially holds Slider Page
   */
 
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
-
-//unnecessary import
-//import QtQuick.Controls.Styles 1.4
-
 
 ApplicationWindow {
     id: window
+    visible: true
     width: 800
-    height: 480 // Window sizes
-    visible: true // show
-    color: "#222222"
+    height: 480
 
-    title: qsTr("Colour dropper")
+    header: ToolBar {
+        contentHeight: toolButton.implicitHeight
 
+        ToolButton {
+            id: toolButton
+            text: stackView.depth > 1 ? "\u25C0" : "\u2630"
+            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            onClicked: {
+                if (stackView.depth > 1) {
+                    stackView.pop()
+                } else {
+                    drawer.open()
+                }
+            }
+        }
 
-    function btnPressed(id) {
-        // Take id as what Button is pressed
-        // Button corresponds to the colour and state
-
+        Label {
+            text: stackView.currentItem.title
+            anchors.centerIn: parent
+        }
     }
 
+    Drawer {
+        id: drawer
+        width: window.width * 0.66
+        height: window.height
 
+        Column {
+            anchors.fill: parent
 
-    Slider {
-        id: colour
-        anchors.centerIn: parent // Positioning
-        width: 640
-        height: 160
-        anchors.verticalCenterOffset: 50
-        anchors.horizontalCenterOffset: 0
-        padding: 20
+            ItemDelegate {
+                text: qsTr("Sliders")
+                width: parent.width
+                onClicked: {
+                    stackView.push("sliders.qml")
+                    drawer.close()
+                } // End Clicked
+            } // End Item
 
+        } // End List
+    } // End Drawer
 
-        background: Rectangle { // Background - rounded rectangle
-            anchors.centerIn: parent
-            x: colour.leftPadding // Positioning
-            y: colour.topPadding + colour.availableHeight / 2 - height / 2 // Positioning within confines of slider object
-            implicitWidth: 240
-            implicitHeight: 90
-            height: colour.availableWidth // Consistent size for design
-            width: implicitHeight
-
-            radius: 20 // Rounded edge
-	    rotation: -90 // Vertical gradient
-            border.width: 1 // Border size
-            border.color: "#333333" // Border colour
-
-            gradient: Gradient {    // Display HSV rainbow for selection
-            	// orientation: Gradient.Horizontal // Gradient orientation
-            	// 6 points on hue circle
-		GradientStop {  // Red
-       	            position: 0.000
-	            color: Qt.hsva(0.000, 1, 1)
-	        }
-	        GradientStop { // Yellow
-	            position: 0.167
-	            color: Qt.hsva(0.167, 1, 1)
-	        }
-	        GradientStop {  // Green
-	            position: 0.333
-	            color: Qt.hsva(0.333, 1, 1)
-	        }
-	        GradientStop { // Light blue
-	            position: 0.500
-	            color: Qt.hsva(0.500, 1, 1)
-	        }
-	        GradientStop { // Dark blue
-		    position: 0.667
-	            color: Qt.hsva(0.667, 1, 1)
-	        }
-	        GradientStop { // Magenta
-	            position: 0.833
-	            color: Qt.hsva(0.833, 1, 1)
-	        }
-	        GradientStop { // Red
-	            position: 1.000
-	            color: Qt.hsva(1.000, 1, 1)
-	        }
-	    } // End Gradient
-        } // End background
-
-        handle: Rectangle // Floating handle designed as a colour dropper
-        {
-            id: recPalette
-            width: 40
-            height: 40
-            x: width/2 + colour.value * (colour.background.height - width) // Fit the colour dropper to the selection bar
-            y: -this.height /2 // Have the dropper appear above the selection bar
-            implicitWidth: 30 // Size of dropper
-            implicitHeight: 50 // Size of dropper
-            radius: 20 // Rounded edges
-
-            //*/ Choice to show dropper only when pressed or all the time
-            color: Qt.hsva(colour.valueAt(colour.position), 1, 1)
-            border.color: "#333333"
-            /*/
-            color: colour.pressed ? Qt.hsva(colour.valueAt(colour.position), 1, 1) // Show dropper with currently selected colour
-                                   : "transparent" // When released, dropper disappears
-            border.color: colour.pressed ? "#333333" // Constant colour
-                                          : "transparent" // Only show dropper and border when selecting colour
-            //*/
-
-
-        } // End handle
-    } // End slider
-
-    Slider {
-        id: brightness
-        width: 640
-        height: 160
-        background: Rectangle {
-            x: brightness.leftPadding
-            y: brightness.topPadding + brightness.availableHeight / 2 - height / 2
-            anchors.centerIn: parent
-            height: brightness.availableWidth
-            width: implicitHeight
-            implicitWidth: 240
-            implicitHeight: 90
-            radius: 20
-	    rotation: -90
-            border.color: "#333333"
-            border.width: 1
-
-
-            gradient: Gradient { // Generate gradient over slider
-                GradientStop { // Black
-                    position: 0
-                    color: Qt.hsva(1, 0, 0)
-                }
-
-                GradientStop { // White
-                    position: 1
-                    color: Qt.hsva(1, 0, 1)
-                }
-                //orientation: Gradient.Horizontal
-            }
-
-        }
-        anchors.verticalCenterOffset: -110
-        handle: Rectangle {
-            id: recPalette1
-            x: width/2 + brightness.value * (brightness.background.height - width)
-            y: -this.height /2
-            width: 40
-            height: 40
-            radius: 20
-
-            //*/ Choice to show dropper only when pressed or all the time
-            color: Qt.hsva(1, 0, brightness.valueAt(brightness.position))
-            border.color: "#333333"
-            /*/ Show dropper with currently selected colour
-            color: brightness.pressed ? Qt.hsva(1, 0, brightness.valueAt(brightness.position))
-                                      : "transparent"
-            border.color: brightness.pressed ? "#333333" // Constant colour
-                                             : "transparent"
-            //*/
-
-            implicitWidth: 30
-            implicitHeight: 50
-        }
-        anchors.horizontalCenterOffset: 0
-        anchors.centerIn: parent
-        padding: 20
+    StackView { // Default Page
+        id: stackView
+        initialItem: "home.qml"
+        anchors.fill: parent
     }
-
-    Button {
-        id: btnOff
-        x: 474
-        y: 114
-        width: 100
-        height: 70
-        text: qsTr("Black")
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenterOffset: 120
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: 165
-        font.pointSize: 11
-        font.family: "Tahoma"
-
-        palette {
-            button: "#111111"
-            buttonText: "#eeeeee"
-        }
-
-        Connections {
-            target: btnOff
-            onClicked: {
-                console.log("Off/Black")
-                btnPressed(0)
-            }
-        } // End connection
-    } // End btnOff
-
-    Button {
-        id: btnSet
-        x: 228
-        y: 114
-        width: 100
-        height: 70
-        text: qsTr("Set Colour")
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenterOffset: -120
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: 165
-        font.pointSize: 11
-        checkable: false
-        font.family: "Tahoma"
-
-
-        Connections {
-            target: btnSet
-            onClicked: {
-                console.log("Colour")
-                btnPressed(2)
-            }
-        } // end connection
-    } // btnSet
-
-    Button {
-        id: btnWhite
-        x: 218
-        y: 107
-        width: 100
-        height: 70
-        text: qsTr("Set White")
-        anchors.verticalCenter: parent.verticalCenter
-        font.pointSize: 11
-        anchors.verticalCenterOffset: 165
-        font.family: "Tahoma"
-        anchors.horizontalCenterOffset: 0
-        Connections {
-            target: btnWhite
-            onClicked: {
-                console.log("White")
-                btnPressed(1)
-            }
-        }
-        anchors.horizontalCenter: parent.horizontalCenter
-        checkable: false
-    } // End btnWhite
-
 }
