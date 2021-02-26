@@ -1,5 +1,12 @@
 /*** Rainbow Slider UI - Colour choosing  **/
 
+/** V1.0
+ ** Update 25/02/21
+  * Implemented MQTT control
+  * Backend added with functions
+  * Backend holds current LED mode, for multiple strips
+  */
+
 /** V0.5
  ** Update 21/02/21
   * Renamed file
@@ -27,6 +34,8 @@
 /** V0.3
  ** Update 27/01/21
   * Modified colour changes
+  * Dropper always appears, changed shape
+  * Kept previous dropper behaviour
   * Added buttons
   * Added function placeholder
   */
@@ -56,11 +65,10 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
+//import QtGraphicalEffects 1.0
 
 //unnecessary import
 //import QtQuick.Controls.Styles 1.4
-
 
 //ApplicationWindow {
 Page {
@@ -133,7 +141,7 @@ Page {
 
         handle: Rectangle // Floating handle designed as a colour dropper
         {
-            id: recPalette
+            id: colourDropper
             width: 40
             height: 40
             x: width/2 + colour.value * (colour.background.height - width) // Fit the colour dropper to the selection bar
@@ -153,8 +161,15 @@ Page {
             //*/
 
 
-        } // End handle
+        }// End handle
 
+        Connections {
+            target: colour
+            function onMoved() {
+                //console.log(colourDropper.color)
+                b.mqttCol(colourDropper.color)
+            }
+        }
 
 
 
@@ -165,6 +180,14 @@ Page {
         id: brightness
         width: 640
         height: 160
+        stepSize: 1
+        anchors.horizontalCenterOffset: 0
+        anchors.centerIn: parent
+        padding: 20
+        anchors.verticalCenterOffset: -110
+        to: 100
+
+
         background: Rectangle {
             x: brightness.leftPadding
             y: brightness.topPadding + brightness.availableHeight / 2 - height / 2
@@ -190,20 +213,19 @@ Page {
                     color: Qt.hsva(1, 0, 1)
                 }
                 //orientation: Gradient.Horizontal
-            }
+            } // End gradient
 
-        }
-        anchors.verticalCenterOffset: -110
+        } // End Background
         handle: Rectangle {
-            id: recPalette1
-            x: width/2 + brightness.value * (brightness.background.height - width)
+            id: brightnessDropper
+            x: width/2 + (brightness.value/100) * (brightness.background.height - width)
             y: -this.height /2
             width: 40
             height: 40
             radius: 20
 
             //*/ Choice to show dropper only when pressed or all the time
-            color: Qt.hsva(1, 0, brightness.valueAt(brightness.position))
+            color: Qt.hsva(1, 0, (brightness.valueAt(brightness.position)/100))
             border.color: "#333333"
 
             /*/ Show dropper with currently selected colour
@@ -215,11 +237,21 @@ Page {
             //*/
             implicitWidth: 30
             implicitHeight: 50
+        } // End Handle
+
+
+        Connections {
+            target: brightness
+            function onMoved() {
+                //console.log(brightness.value)
+                b.mqttBrt(brightness.value)
+            }
+
         }
-        anchors.horizontalCenterOffset: 0
-        anchors.centerIn: parent
-        padding: 20
-    }
+
+
+
+    } // End Slider
 
     Button {
         id: btnOff
@@ -243,19 +275,22 @@ Page {
         Connections {
             target: btnOff
             function onClicked() {
-                //console.log("Off/Black")
-                b.output(0)
+                //console.log("Off")
+                brightness.value = 0
+
+                b.debug(0)
+                b.mqttBrt(brightness.value)
             }
         } // End connection
     } // End btnOff
 
     Button {
-        id: btnSet
+        id: btnOn
         x: 228
         y: 114
         width: 100
         height: 70
-        text: qsTr("Set Colour")
+        text: qsTr("On")
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenterOffset: 120
         anchors.horizontalCenter: parent.horizontalCenter
@@ -267,8 +302,11 @@ Page {
         Connections {
             target: btnSet
             function onClicked() {
-                //console.log("Colour")
-                b.output(2)
+                //console.log("On")
+                brightness.value = 100
+
+                b.debug(1)
+                b.mqttBrt(brightness.value)
             }
         } // end connection
     } // btnSet
@@ -289,8 +327,11 @@ Page {
         Connections {
             target: btnWhite
             function onClicked() {
-                //console.log("White")
-                b.output(1)
+                //("White")
+
+                b.debug(1)
+                b.mqttCol("#ffffee")
+                //b.mqttBrt(brightness.value)
             }
         }
         anchors.horizontalCenter: parent.horizontalCenter
