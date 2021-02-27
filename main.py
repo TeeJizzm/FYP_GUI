@@ -53,6 +53,7 @@ class backend(qtcore.QObject):
     def setMode(self, arg):
         self.mode = arg
         pass
+    @qtcore.Slot()
     def getMode(self):
         return self.mode
 
@@ -63,7 +64,9 @@ if __name__ == "__main__":
     context = engine.rootContext()
 
     # Create MQTT client
-    broker = "192.168.1.176"
+    #broker = "192.168.1.176" # teejberry.local
+    broker = "teejberry"
+    #broker = "teejberry.local"
     port = 1883
     QoS = 1
     def on_publish(client,userdata,result):
@@ -76,7 +79,6 @@ if __name__ == "__main__":
 
     # Create linking object
     b = backend()
-
     # Expose object to QML
     context.setContextProperty("b",b)
 

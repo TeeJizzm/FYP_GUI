@@ -79,14 +79,15 @@ Page {
     background: Rectangle { // Changed to a background rectangle
         color: "#222222"
     }
-    title: qsTr("Colour Selector")
+
+    title: qsTr("Select Colour for " + b.getMode())
 
     Slider {
         id: colour
         anchors.centerIn: parent // Positioning
         width: 640
         height: 160
-        anchors.verticalCenterOffset: 50
+        anchors.verticalCenterOffset: -110
         anchors.horizontalCenterOffset: 0
         padding: 20
 
@@ -184,7 +185,7 @@ Page {
         anchors.horizontalCenterOffset: 0
         anchors.centerIn: parent
         padding: 20
-        anchors.verticalCenterOffset: -110
+        anchors.verticalCenterOffset: 50
         to: 100
 
 
@@ -259,9 +260,9 @@ Page {
         y: 114
         width: 100
         height: 70
-        text: qsTr("Black")
+        text: qsTr("Brightness\nMin")
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenterOffset: -120
+        anchors.horizontalCenterOffset: -180
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 165
         font.pointSize: 11
@@ -290,9 +291,9 @@ Page {
         y: 114
         width: 100
         height: 70
-        text: qsTr("On")
+        text: qsTr("Brightness\nMax")
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenterOffset: 120
+        anchors.horizontalCenterOffset: 180
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 165
         font.pointSize: 11
@@ -300,7 +301,7 @@ Page {
         font.family: "Tahoma"
 
         Connections {
-            target: btnSet
+            target: btnOn
             function onClicked() {
                 //console.log("On")
                 brightness.value = 100
