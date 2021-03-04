@@ -166,8 +166,8 @@ Page {
 
         Connections {
             target: colour
-            function onMoved() {
-                //console.log(colourDropper.color)
+            onMoved: {
+                //console.info(colourDropper.color)
                 b.mqttCol(colourDropper.color)
             }
         }
@@ -243,8 +243,8 @@ Page {
 
         Connections {
             target: brightness
-            function onMoved() {
-                //console.log(brightness.value)
+            onMoved: {
+                //console.info(brightness.value)
                 b.mqttBrt(brightness.value)
             }
 
@@ -275,8 +275,8 @@ Page {
 
         Connections {
             target: btnOff
-            function onClicked() {
-                //console.log("Off")
+            onClicked: {
+                //console.info("Off")
                 brightness.value = 0
 
                 b.debug(0)
@@ -302,8 +302,8 @@ Page {
 
         Connections {
             target: btnOn
-            function onClicked() {
-                //console.log("On")
+            onClicked: {
+                //console.info("On")
                 brightness.value = 100
 
                 b.debug(1)
@@ -327,8 +327,8 @@ Page {
 
         Connections {
             target: btnWhite
-            function onClicked() {
-                //("White")
+            onClicked: {
+                //console.info("White")
 
                 b.debug(1)
                 b.mqttCol("#ffffee")

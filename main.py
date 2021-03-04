@@ -40,14 +40,14 @@ class backend(qtcore.QObject):
         send = str("lights/" + str(self.getMode()) + "/colour")
         client.connect(broker,port,QoS)
         ret = client.publish(send , str(arg)) #"lights/strip/colour"
-        print(send)
+        #print(send)
         pass
     @qtcore.Slot(str)
     def mqttBrt(self, arg):
         send = str("lights/" + str(self.getMode()) + "/brightness")
         client.connect(broker,port,QoS)
         ret = client.publish(send, str(arg)) #"lights/strip/brightness"
-        print(send)
+        #print(send)
         pass
     @qtcore.Slot(str)
     def setMode(self, arg):
@@ -76,6 +76,8 @@ if __name__ == "__main__":
     client = paho.Client("controlGUI")
     client.on_publish = on_publish
     client.connect(broker,port, QoS)
+    print("Connected: ", broker)
+
 
     # Create linking object
     b = backend()

@@ -19,7 +19,7 @@ import QtQuick.Controls 2.4
 ApplicationWindow {
     id: window
     visible: true
-    //visibility: "FullScreen"
+    visibility: "FullScreen"
     width: 800
     height: 480
 
