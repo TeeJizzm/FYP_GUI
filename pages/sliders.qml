@@ -1,5 +1,11 @@
 /*** Rainbow Slider UI - Colour choosing  **/
 
+/** V1.1
+ ** Update 05/03/21
+  * Fixed titling with currentMode
+  *
+  */
+
 /** V1.0
  ** Update 25/02/21
   * Implemented MQTT control
@@ -80,7 +86,8 @@ Page {
         color: "#222222"
     }
 
-    title: qsTr("Select Colour for " + b.getMode())
+    property string currentMode: b.getMode()
+    title: qsTr("Select Colour for '" + currentMode + "'")
 
     Slider {
         id: colour

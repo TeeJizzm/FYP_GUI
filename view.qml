@@ -19,7 +19,7 @@ import QtQuick.Controls 2.4
 ApplicationWindow {
     id: window
     visible: true
-    visibility: "FullScreen"
+    //visibility: "FullScreen"
     width: 800
     height: 480
 
@@ -31,7 +31,7 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u2630" //"\u25C0" : "\u2630"  // 🍔 🔙
+            text: stackView.depth > 1 ? "\u25C0" : "\u2630" // 🍔 🔙
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             palette {
                 button: "#333333"
@@ -81,7 +81,7 @@ ApplicationWindow {
 
                 onClicked: {
                     b.setMode("strip")
-                    stackView.push("sliders.qml")
+                    stackView.push("pages/sliders.qml")
                     drawer.close()
                 } // End Clicked
             } // End Item
@@ -100,7 +100,7 @@ ApplicationWindow {
 
                 onClicked: {
                     b.setMode("chain")
-                    stackView.push("sliders.qml")
+                    stackView.push("pages/sliders.qml")
                     drawer.close()
                 } // End Clicked
             } // End Item
@@ -110,7 +110,7 @@ ApplicationWindow {
 
     StackView { // Default Page
         id: stackView
-        initialItem: "home.qml"
+        initialItem: "pages/home.qml"
         anchors.fill: parent
     }
 }

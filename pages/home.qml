@@ -14,7 +14,7 @@ import QtQuick.Controls 2.4
 
 
 Page {
-    id: page
+    id: homePage
     width: 800
     height: 440
 
@@ -36,20 +36,36 @@ Page {
     }
 
     Timer {
-        id: timer
+        // timer is synchronised to the animation timer
+        // multiple of 1/30fps is most appropriate
+        id: clockTime
         repeat: true
-        interval: 1000
+        interval: 500
         running: true
 
 
-        onTriggered: page.currentDate = new Date()
+        onTriggered: {
+            homePage.currentDate = new Date()
+
+
+
+            // If midnight, update sunrise/sunset times
+            if (hours === 0 & minutes === 0 & seconds === 0) {
+
+            }
+
+
+        }
+
+
+
+
+
     }
 
     Rectangle {
         id: rectangle
-        x: 199
-        y: 93
-        width: 200
+        width: 205
         height: 200
         color: "#999999"
         radius: 100
