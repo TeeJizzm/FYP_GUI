@@ -44,7 +44,8 @@ class backend(qtcore.QObject):
         super().__init__()
         #print("Initiating MQTT client")
         pass
-    # internal
+
+    # internal variables
     mode = 'strip'
     sunsetH = 0
     sunsetM = 0
@@ -77,6 +78,7 @@ class backend(qtcore.QObject):
     @qtcore.Slot(result=str)
     def getMode(self):
         return self.mode
+
 
 
 if __name__ == "__main__":

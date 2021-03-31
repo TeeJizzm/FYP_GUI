@@ -73,7 +73,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Label {
-            text: (qsTr(pad(pad(hours)) + ":" + pad(pad(minutes)) + ":" + pad(pad(seconds))))
+            text: (qsTr(pad(hours) + ":" + pad(minutes) + ":" + pad(seconds)))
             anchors.centerIn: parent
             font.pointSize: 20
             font.family: "Tahoma"
