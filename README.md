@@ -6,8 +6,8 @@ GUI programme for Final Year Project on Raspberry Pi
 
 ### PyPI modules
 
-astral
-paho.mqtt
+- astral
+- paho.mqtt
 
 ### Installing PySide2
 
